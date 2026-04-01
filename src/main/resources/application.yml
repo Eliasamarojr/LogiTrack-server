@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/logitrack?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Sao_Paulo}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+logitrack:
+  jwt:
+    secret: ${LOGITRACK_JWT_SECRET:logitrack-dev-secret-change-me-min-256-bits-please-use-long-secret}
+    expiration-ms: 86400000
+    cookie:
+      name: logitrack_access_token
+      path: /
+      secure: ${LOGITRACK_COOKIE_SECURE:false}
+      same-site: ${LOGITRACK_COOKIE_SAME_SITE:Lax}
+  cors:
+    allowed-origin-patterns:
+      - "http://localhost:*"
+      - "http://127.0.0.1:*"
+    frontend-public-url: ${LOGITRACK_FRONTEND_URL:}
+  seed:
+    admin-username: admin
+    admin-password: admin123
+
+server:
+  address: 0.0.0.0
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
